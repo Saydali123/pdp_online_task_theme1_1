@@ -19,6 +19,6 @@ public class Company {
     private String corpName;
 
     private String directorName;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Address address;
 }

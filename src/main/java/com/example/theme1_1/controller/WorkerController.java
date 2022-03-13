@@ -13,11 +13,9 @@ import com.example.theme1_1.repository.WorkerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -59,5 +57,24 @@ public class WorkerController {
 
         return ResponseEntity.ok("success");
     }
+
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    public HttpEntity<?> getAll() {
+        List<Worker> all = workerRepo.findAll();
+        return ResponseEntity.ok(all);
+    }
+
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
+    public HttpEntity<?> get(@PathVariable Integer id) {
+        Optional<Worker> byId = workerRepo.findById(id);
+        return ResponseEntity.ok(byId.orElse(null));
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    public HttpEntity<?> delete(@PathVariable Integer id) {
+        workerRepo.deleteById(id);
+        return ResponseEntity.ok("success");
+    }
+
 
 }
